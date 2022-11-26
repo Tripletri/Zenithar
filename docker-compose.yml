@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  web-app:
+    image: heim/zenithar/web-app
+    build:
+      context: .
+      dockerfile: .docker/web-app.dockerfile
+    ports:
+      - "8122:80"
+    environment:
+      ProductsClient__ApiUri: http://products-api
+    depends_on:
+      - products-api
+  
+  products-api:
+    image: heim/zenithar/products-api
+    build:
+      context: .
+      dockerfile: .docker/products-api.dockerfile
+    ports:
+      - "8123:80"
+    environment:
+      Postgres__ConnectionString: Host=postgres;Port=5432;Database=products;Username=postgres;Password=pg_pass
+      DbStartUp__Seed: true
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres
+    container_name: postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: pg_pass
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg-data:

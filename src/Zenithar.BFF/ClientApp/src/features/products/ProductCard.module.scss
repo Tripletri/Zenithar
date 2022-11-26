@@ -1,0 +1,19 @@
+@import "src/styles/variables";
+
+.card {
+  background-color: $dark !important;
+  color: $white !important;
+  height: 100%;
+}
+
+.img{
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.cardBody{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.3rem;
+}

@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "Zenithar.BFF": {
+      "commandName": "Project",
+      "applicationUrl": "https://localhost:7122",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
