@@ -10,4 +10,6 @@ public interface IProductsService
 
     Task<Product> Update(string id, string name, int price, string previewUrl,
                          CancellationToken cancellationToken = default);
+
+    Task Remove(string id, CancellationToken cancellationToken);
 }

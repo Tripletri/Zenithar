@@ -70,4 +70,18 @@ public sealed class V1ProductsController : V1ApiControllerBase
             return NotFound(e.Message);
         }
     }
+
+    [HttpDelete("products/{id}")]
+    public async Task<ActionResult> Remove(string id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await productsService.Remove(id, cancellationToken);
+            return NoContent();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 }

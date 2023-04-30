@@ -1,14 +1,7 @@
-import {createApi} from '@reduxjs/toolkit/query/react'
-import {
-  MutationLifecycleApi
-} from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-import {
-  BaseQueryFn,
-  FetchArgs,
-  fetchBaseQuery,
-  FetchBaseQueryError
-} from '@reduxjs/toolkit/query'
-import {ProductDto} from 'features/products/productsApi'
+import {createApi} from "@reduxjs/toolkit/query/react"
+import {MutationLifecycleApi} from "@reduxjs/toolkit/dist/query/endpointDefinitions"
+import {BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError} from "@reduxjs/toolkit/query"
+import {ProductDto} from "features/products/productsApi"
 
 export interface BasketDto {
   productBatches: ProductsBatchDto[];
@@ -22,30 +15,30 @@ export interface ProductsBatchDto {
 }
 
 export const basketApi = createApi({
-  reducerPath: 'basketApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'api/basket/'}),
+  reducerPath: "basketApi",
+  baseQuery: fetchBaseQuery({baseUrl: "/api/basket/"}),
   endpoints: build => ({
     getBasket: build.query<BasketDto, void>({
-      query: () => '/'
+      query: () => "/"
     }),
     addProduct: build.mutation<BasketDto, string>({
       query: (productId) => ({
         url: `products/${productId}`,
-        method: 'POST'
+        method: "POST"
       }),
       onQueryStarted: updateBasketQueryCache()
     }),
     removeProduct: build.mutation<BasketDto, string>({
       query: (productId) => ({
         url: `products/${productId}`,
-        method: 'DELETE'
+        method: "DELETE"
       }),
       onQueryStarted: updateBasketQueryCache()
     }),
     clear: build.mutation<BasketDto, void>({
       query: () => ({
-        url: 'clear',
-        method: 'POST'
+        url: "clear",
+        method: "POST"
       }),
       onQueryStarted: updateBasketQueryCache()
     })
@@ -61,7 +54,7 @@ function updateBasketQueryCache<QueryArg>() {
   }: MutationLifecycleApi<QueryArg, BaseQuery, BasketDto, string>) {
     const {data: basket} = await queryFulfilled
     dispatch(basketApi.util.updateQueryData(
-      'getBasket', undefined, () => basket
+      "getBasket", undefined, () => basket
     ))
   }
 }

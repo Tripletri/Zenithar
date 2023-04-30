@@ -1,0 +1,9 @@
+@import "styles/variables";
+
+.appForm {
+  color: white;
+}
+
+.appForm > div {
+  margin-bottom: map-get($spacers, 3)
+}

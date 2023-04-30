@@ -21,6 +21,7 @@ services.AddAutoMapper(Assembly.GetExecutingAssembly());
 services.AddSingleton<IProductsClient, ProductsClient>();
 services.AddSingleton<IBasketService, BasketService>();
 services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
+services.AddSingleton<IProductsService, ProductsService>();
 services.AddSingleton<HttpClient>();
 
 // ---------------------

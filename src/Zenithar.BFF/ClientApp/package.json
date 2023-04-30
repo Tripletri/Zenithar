@@ -14,6 +14,7 @@
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.10.2",
     "bootstrap-sass": "^3.4.3",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
@@ -22,7 +23,8 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.9.3",
     "url-join": "^5.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
   },
   "proxy": "https://localhost:7122",
   "scripts": {

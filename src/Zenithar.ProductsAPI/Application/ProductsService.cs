@@ -23,7 +23,9 @@ internal sealed class ProductsService : IProductsService
     {
         logger.LogInformation("Getting products from database");
 
-        var models = await productsDb.Products.ToArrayAsync(cancellationToken);
+        var models = await productsDb.Products
+            .OrderBy(x => x.Id)
+            .ToArrayAsync(cancellationToken);
 
         logger.LogInformation("Get products count: {ProductsCount}", models.Length);
 
@@ -52,6 +54,7 @@ internal sealed class ProductsService : IProductsService
         var model = new ProductModel(Guid.NewGuid().ToString(), name, price, previewUrl);
 
         await productsDb.Products.AddAsync(model, cancellationToken);
+        await productsDb.SaveChangesAsync(cancellationToken);
 
         return mapper.Map<Product>(model);
     }
@@ -59,8 +62,8 @@ internal sealed class ProductsService : IProductsService
     public async Task<Product> Update(string id, string name, int price, string previewUrl,
                                       CancellationToken cancellationToken = default)
     {
-        var model = await productsDb.Products.FindAsync(new { id }, cancellationToken);
-        
+        var model = await productsDb.Products.FindAsync(new object[] { id }, cancellationToken);
+
         if (model == null)
             throw new KeyNotFoundException($"Product '{id}' not found");
 
@@ -71,5 +74,16 @@ internal sealed class ProductsService : IProductsService
         await productsDb.SaveChangesAsync(cancellationToken);
 
         return mapper.Map<Product>(model);
+    }
+
+    public async Task Remove(string id, CancellationToken cancellationToken)
+    {
+        var model = await productsDb.Products.FindAsync(new object[] { id }, cancellationToken);
+
+        if (model == null)
+            throw new KeyNotFoundException($"Product '{id}' not found");
+
+        productsDb.Products.Remove(model);
+        await productsDb.SaveChangesAsync(cancellationToken);
     }
 }
