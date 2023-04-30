@@ -44,4 +44,30 @@ public sealed class V1ProductsController : V1ApiControllerBase
 
         return mapper.Map<V1Product>(product);
     }
+
+    [HttpPost("products")]
+    public async Task<ActionResult<V1Product>> Create(V1CreateProductRequest request,
+                                                      CancellationToken cancellationToken)
+    {
+        var product = await productsService.Create(request.Name, request.Price, request.PreviewUrl, cancellationToken);
+
+        return mapper.Map<V1Product>(product);
+    }
+
+    [HttpPut("products/{id}")]
+    public async Task<ActionResult<V1Product>> Update(string id, V1UpdateProductRequest request,
+                                                      CancellationToken cancellationToken)
+    {
+        try
+        {
+            var product =
+                await productsService.Update(id, request.Name, request.Price, request.PreviewUrl, cancellationToken);
+
+            return mapper.Map<V1Product>(product);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 }

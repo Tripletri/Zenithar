@@ -3,9 +3,9 @@
 internal sealed class ProductModel
 {
     public string Id { get; private set; }
-    public string Name { get; private set; }
-    public double Price { get; private set; }
-    public string PreviewUrl { get; private set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public string PreviewUrl { get; set; }
 
     private ProductModel() { }
 

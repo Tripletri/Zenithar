@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Zenithar.ProductsAPI.Core;
 using Zenithar.ProductsAPI.DataAccess;
+using Zenithar.ProductsAPI.DataAccess.Models;
 
 namespace Zenithar.ProductsAPI.Application;
 
@@ -42,6 +43,33 @@ internal sealed class ProductsService : IProductsService
         }
 
         logger.LogInformation("Successfully found product");
+        return mapper.Map<Product>(model);
+    }
+
+    public async Task<Product> Create(string name, int price, string previewUrl,
+                                      CancellationToken cancellationToken = default)
+    {
+        var model = new ProductModel(Guid.NewGuid().ToString(), name, price, previewUrl);
+
+        await productsDb.Products.AddAsync(model, cancellationToken);
+
+        return mapper.Map<Product>(model);
+    }
+
+    public async Task<Product> Update(string id, string name, int price, string previewUrl,
+                                      CancellationToken cancellationToken = default)
+    {
+        var model = await productsDb.Products.FindAsync(new { id }, cancellationToken);
+        
+        if (model == null)
+            throw new KeyNotFoundException($"Product '{id}' not found");
+
+        model.Name = name;
+        model.Price = price;
+        model.PreviewUrl = previewUrl;
+
+        await productsDb.SaveChangesAsync(cancellationToken);
+
         return mapper.Map<Product>(model);
     }
 }
