@@ -9,9 +9,13 @@
         <SpaRoot>ClientApp\</SpaRoot>
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>06830c80-265e-480f-b14a-426ef3346c38</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AWSSDK.Core" Version="3.7.106.32" />
+        <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.7" />
+        <PackageReference Include="AWSSDK.S3" Version="3.7.104.11" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />

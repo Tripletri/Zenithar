@@ -47,7 +47,7 @@ public class ProductsController : ApiControllerBase
     public async Task<ActionResult<ProductDto>> Update(string id, [FromForm] UpdateProductRequest request,
                                                        CancellationToken cancellationToken)
     {
-        var product = await productsService.Update(id, request.Name, request.Price, request.Image?.OpenReadStream(),
+        var product = await productsService.Update(id, request.Name, request.Price, request.Image.OpenReadStream(),
             cancellationToken);
 
         return mapper.Map<ProductDto>(product);
