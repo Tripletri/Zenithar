@@ -2,10 +2,7 @@ version: "3.8"
 
 services:
   web-app:
-    image: heim/zenithar/web-app
-    build:
-      context: .
-      dockerfile: .docker/web-app.dockerfile
+    image: tripletri/zenithar-web
     ports:
       - "8122:80"
     environment:
@@ -14,27 +11,20 @@ services:
       - products-api
   
   products-api:
-    image: heim/zenithar/products-api
-    build:
-      context: .
-      dockerfile: .docker/products-api.dockerfile
+    image: tripletri/zenithar-products
     ports:
       - "8123:80"
     environment:
-      Postgres__ConnectionString: Host=postgres;Port=5432;Database=products;Username=postgres;Password=pg_pass
+      Postgres__ConnectionString: Host=postgres;Port=5432;Database=zenithar;Username=postgres;Password=pg_pass
       DbStartUp__Seed: true
     depends_on:
       - postgres
   
   postgres:
-    image: postgres
-    container_name: postgres
-    volumes:
-      - pg-data:/var/lib/postgresql/data
+    image: postgres:15-bullseye
     environment:
+      POSTGRES_DB: zenithar
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pg_pass
     ports:
       - "5432:5432"
-
-volumes:
-  pg-data:
