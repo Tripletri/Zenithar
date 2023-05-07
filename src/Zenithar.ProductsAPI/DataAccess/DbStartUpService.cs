@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Zenithar.ProductsAPI.DataAccess.Models;
 using Zenithar.ProductsAPI.Options;
@@ -28,17 +29,21 @@ internal sealed class DbStartUpService : IHostedService
         await using var scope = scopeFactory.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ProductsDbContext>();
 
-        if (options.Seed)
-        {
-            logger.LogWarning("Seeding is enabled. Deleting database");
-            await dbContext.Database.EnsureDeletedAsync(cancellationToken);
-        }
-
         logger.LogInformation("Migrating database");
         await dbContext.Database.EnsureCreatedAsync(cancellationToken);
 
         if (options.Seed)
         {
+            logger.LogInformation("Seeding is enabled");
+            
+            var productsExists = await dbContext.Products.AnyAsync(cancellationToken: cancellationToken);
+
+            if (productsExists)
+            {
+                logger.LogInformation("Products already exists. Seeding will not be preformed");
+                return;
+            }
+            
             logger.LogInformation("Seeding database with products");
             await dbContext.Products.AddRangeAsync(GenerateProducts(), cancellationToken);
             await dbContext.SaveChangesAsync(cancellationToken);

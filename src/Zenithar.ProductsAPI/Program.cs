@@ -7,7 +7,6 @@ using Zenithar.ProductsAPI.Options;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-services.Configure<PostgresOptions>(builder.Configuration.GetRequiredSection("Postgres"));
 services.Configure<DbStartUpOptions>(builder.Configuration.GetRequiredSection("DbStartUp"));
 
 services.AddControllers();
@@ -15,7 +14,7 @@ services.AddSwaggerGen();
 
 services.AddDbContext<ProductsDbContext>(o =>
 {
-    o.UseNpgsql();
+    o.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
 });
 
 services.AddHostedService<DbStartUpService>();
