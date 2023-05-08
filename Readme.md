@@ -8,11 +8,13 @@
 
 ### Сценарии
 
-- Просмотр товаров. Нужно зайти на главную страницу
-- Добавление товаров в корзину. Нужно нажать кнопку на карточке товара
-- Редактирование корзины. Нужно открыть меню корзины, нажав на кнопку в хедере сайта
-- - Увеличение\уменьшение количества экземпляров товара. Происходит с помощью кнопок на карточке товара в корзине
-- - Отчистка корзины. Нужно нажать на кнопку в меню корзины
+- Просмотр товаров
+- Добавление товаров в корзину
+- Редактирование корзины
+- - Увеличение\уменьшение количества экземпляров товар
+- - Отчистка корзины
+- Админка
+- - CRUD Операции с товарами
 
 
 ### Компоненты
@@ -21,6 +23,39 @@
 - PostgreSQL - База данных для товаров
 - BFF - сервис, предоставляющий REST API для веб клиента, с целью упростить взаимодействие клиента с другими сервисами
 - Web-сайт - приложение на React для предоставления веб-интерфейса пользователю
+
+## Using
+### Terraform for Yandex Cloud
+1. [Prepare for work with terraform](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
+2. Create [Yandex Container Registry](https://cloud.yandex.com/en/services/container-registry)
+3. Push docker images into YCR*
+4. Create `./terraform/terraform.tfvars` and fill it with variables, described in `variables.tf`, using `key = value` format
+5. Navigate to `./terrafrom` and execute
+```
+terraform init
+terrafrom paln -out main
+```
+6. For deployment run `terraform apply "main"`
+
+\* [Serverless Containers](https://cloud.yandex.com/en/docs/serverless-containers/quickstart/container#create-container) supports only `cr.yandex`. You can use [github action's](./.github/workflows/main.yml) `vars.YANDEX_REGISTRY_ID` to push it on ci
+
+![Zenithar Yandex Cloud Topology](.static/zenithar-yc.drawio.png)
+
+### Local
+Для локального запуска приложения можно воспользоваться docker-compose.yml в корне репозитория. Чтобы это сделать, нужно находясь в корне репозитория выполнить команду:
+```
+docker compose up
+```
+После чего перейти по http://localhost:8122
+
+Образы можно пересобрать локально перейдя в католог .docker и запустив файл .docker/build-images.ps1
+```
+cd .docker
+.\build-images.ps1
+```
+
+<details>
+  <summary>Application level architecture</summary>
 
 ### Точки расширения
  - Добавление новых страниц на web-сайт
@@ -58,15 +93,4 @@
 Для WebApi слоя обработка ошибок происходит в ExceptionFilter. Это гарантирует, что все ошибки, возникшие во время запросов пользователя, будут отловлены и приведены к единообразному виду. Таким образом и клиенту будет понятно почему запрос не удался, и мы не раскроем деталей внутренней реализации
 В приложение присутствует легированные, благодаря которому мы узнаем, где и когда произошла ошибка. А также сможем понять более детально понять контекст ее возникновения, путем анализа логов
 
-#### Локальный запуск приложения
-Для локального запуска приложения можно воспользоваться docker-compose.yml в корне репозитория. Чтобы это сделать, нужно находясь в корне репозитория выполнить команду:
-```
-docker compose up
-```
-После чего перейти по http://localhost:8122
-
-Образы можно пересобрать локально перейдя в католог .docker и запустив файл .docker/build-images.ps1
-```
-cd .docker
-.\build-images.ps1
-```
+</details>
