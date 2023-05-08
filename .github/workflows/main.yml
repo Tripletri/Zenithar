@@ -62,7 +62,6 @@ jobs:
           file: .docker/products-api.dockerfile
           push: true
           tags: ${{ steps.products-meta.outputs.tags }}
-          labels: ${{ steps.products-meta.outputs.labels }}
 
       - name: Build and push web
         uses: docker/build-push-action@v4
@@ -71,4 +70,3 @@ jobs:
           file: .docker/web-app.dockerfile
           push: true
           tags: ${{ steps.web-meta.outputs.tags }}
-          labels: ${{ steps.web-meta.outputs.labels }}
