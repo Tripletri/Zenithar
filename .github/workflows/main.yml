@@ -56,16 +56,18 @@ jobs:
         uses: docker/setup-buildx-action@v2
   
       - name: Build and push products
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v3
         with:
+          provenance: false
           context: .
           file: .docker/products-api.dockerfile
           push: true
           tags: ${{ steps.products-meta.outputs.tags }}
 
       - name: Build and push web
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v3
         with:
+          provenance: false
           context: .
           file: .docker/web-app.dockerfile
           push: true
