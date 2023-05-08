@@ -1,0 +1,15 @@
+# https://cloud.yandex.com/en/docs/cos/concepts/coi-specifications#coi-spec
+
+spec:
+  containers:
+  - image: tripletri/zenithar-products
+    name: products
+    securityContext:
+      privileged: false
+    stdin: false
+    tty: false
+    env:
+      - name: ConnectionStrings__Postgres
+        value: "Host=${pg_host};Port=6432;Database=${pg_db};Username=${pg_username};Password=${pg_password};SSL Mode=VerifyFull;Root Certificate=CA.pem"
+      - name: DbStartUp__Seed
+        value: true
