@@ -32,9 +32,9 @@ terrafrom paln -out main
 
 Once deployed, you will see links to the application host and other useful information (such as connection strings) for maintaining
 
-\*[Serverless Containers](https://cloud.yandex.com/en/docs/serverless-containers/quickstart/container#create-container) only supports `cr.yandex`. You can use preconfigured [github actions](./.github/workflows/main.yml) to push images on CI
-
 ![Zenithar Yandex Cloud Topology](.static/zenithar-yc.drawio.png)
+
+\*[Serverless Containers](https://cloud.yandex.com/en/docs/serverless-containers/quickstart/container#create-container) only supports `cr.yandex`. You can use preconfigured [github actions](./.github/workflows/main.yml) to push images on CI
 
 ### Local
 Для локального запуска приложения можно воспользоваться docker-compose.yml в корне репозитория. Чтобы это сделать, нужно находясь в корне репозитория выполнить команду:
