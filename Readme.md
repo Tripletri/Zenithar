@@ -1,20 +1,14 @@
-﻿# Zenithar
+### Zenithar - minimal web shop
 
-**Команда**: Heim
-
-**Участники**: Никита Богданов РИ-300016 (АТ-02)
-
-**Zenithar** - небольшой онлайн магазин
-
-### Сценарии
+### Возможности
 
 - Просмотр товаров
 - Добавление товаров в корзину
 - Редактирование корзины
-- - Увеличение\уменьшение количества экземпляров товар
-- - Отчистка корзины
+  - Увеличение\уменьшение количества экземпляров товар
+  - Отчистка корзины
 - Админка
-- - CRUD Операции с товарами
+  - CRUD Операции с товарами
 
 
 ### Компоненты
@@ -27,17 +21,18 @@
 ## Using
 ### Terraform for Yandex Cloud
 1. [Prepare for work with terraform](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
-2. Create [Yandex Container Registry](https://cloud.yandex.com/en/services/container-registry)
-3. Push docker images into YCR*
-4. Create `./terraform/terraform.tfvars` and fill it with variables, described in `variables.tf`, using `key = value` format
-5. Navigate to `./terrafrom` and execute
+2. Create [Yandex Container Registry](https://cloud.yandex.com/en/services/container-registry) and push docker images into it*
+3. Create `./terraform/terraform.tfvars` and fill it with variables described in [variables.tf](./terraform/variables.tf) using `key = value` format
+4. Navigate to `./terrafrom` and execute
 ```
 terraform init
 terrafrom paln -out main
 ```
-6. For deployment run `terraform apply "main"`
+5. For deployment run `terraform apply "main"`
 
-\* [Serverless Containers](https://cloud.yandex.com/en/docs/serverless-containers/quickstart/container#create-container) supports only `cr.yandex`. You can use [github action's](./.github/workflows/main.yml) `vars.YANDEX_REGISTRY_ID` to push it on ci
+Once deployed, you will see links to the application host and other useful information (such as connection strings) for maintaining
+
+\*[Serverless Containers](https://cloud.yandex.com/en/docs/serverless-containers/quickstart/container#create-container) only supports `cr.yandex`. You can use preconfigured [github actions](./.github/workflows/main.yml) to push images on CI
 
 ![Zenithar Yandex Cloud Topology](.static/zenithar-yc.drawio.png)
 
