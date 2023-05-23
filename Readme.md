@@ -23,10 +23,10 @@
 1. [Prepare for work with terraform](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
 2. Create [Yandex Container Registry](https://cloud.yandex.com/en/services/container-registry) and push docker images into it*
 3. Create `./terraform/terraform.tfvars` and fill it with variables described in [variables.tf](./terraform/variables.tf) using `key = value` format
-4. Navigate to `./terrafrom` and execute
+4. Navigate to `./terraform` and execute
 ```
 terraform init
-terrafrom paln -out main
+terraform plan -out main
 ```
 5. For deployment run `terraform apply "main"`
 
